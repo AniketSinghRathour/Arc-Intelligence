@@ -91,37 +91,37 @@ export default function Timeline({ events, highlightedIndex }: Props) {
                 />
                 
                 <div className="flex items-start justify-between gap-4 mb-3 relative z-10">
-                  <div className="space-y-1.5 flex-1">
-                    <span className="font-mono text-[11px] tracking-widest text-war-muted/80 uppercase">
+                  <div className="space-y-1 flex-1">
+                    <span className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
                       {event.date}
                     </span>
-                    <h3 className={`font-syne text-[16px] font-bold leading-snug tracking-tight transition-colors duration-300 ${isHighlighted ? 'text-white' : 'text-war-text'}`}>
+                    <h3 className={`text-base font-bold leading-snug tracking-tight transition-colors duration-300 ${isHighlighted ? 'text-war-text dark:text-white' : 'text-war-text'}`}>
                       {event.title}
                     </h3>
                   </div>
                   <span
-                    className="text-[10px] uppercase tracking-wider font-mono px-3 py-1.5 rounded-full flex-shrink-0 mt-0.5 shadow-sm font-semibold"
+                    className="text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5 shadow-sm"
                     style={{ background: colors.bg, color: colors.text, border: `1px solid ${colors.glow}` }}
                   >
                     {event.tag}
                   </span>
                 </div>
                 
-                <p className={`font-mono text-[13px] leading-relaxed relative z-10 transition-colors duration-300 ${isHighlighted ? 'text-war-text/90' : 'text-war-muted'}`}>
+                <p className={`text-sm leading-relaxed relative z-10 transition-colors duration-300 ${isHighlighted ? 'text-war-text/90' : 'text-war-muted'}`}>
                   {event.summary}
                 </p>
                 
                 {/* Bi-directional Sentiment bar */}
                 <div className="mt-5 pt-4 border-t border-war-border/30 flex items-center gap-4 relative z-10">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-war-muted/80 w-12 font-medium">Impact</span>
-                  <div className="flex-1 h-2 bg-[#0a0a0b]/80 border border-war-border/40 rounded-full overflow-hidden flex shadow-inner relative">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-war-muted/80 w-12">Impact</span>
+                  <div className="flex-1 h-2 bg-war-surface border border-war-border/40 rounded-full overflow-hidden flex shadow-inner relative">
                     {/* Background reference lines */}
                     <div className="absolute inset-0 flex justify-between items-center px-1 pointer-events-none opacity-20">
-                      <div className="w-0.5 h-1 bg-white" />
-                      <div className="w-0.5 h-1 bg-white" />
-                      <div className="w-0.5 h-1 bg-white" />
-                      <div className="w-0.5 h-1 bg-white" />
-                      <div className="w-0.5 h-1 bg-white" />
+                      <div className="w-0.5 h-1 bg-war-muted" />
+                      <div className="w-0.5 h-1 bg-war-muted" />
+                      <div className="w-0.5 h-1 bg-war-muted" />
+                      <div className="w-0.5 h-1 bg-war-muted" />
+                      <div className="w-0.5 h-1 bg-war-muted" />
                     </div>
                     {/* Left (Negative) Side */}
                     <div className="w-1/2 flex justify-end">
@@ -130,7 +130,7 @@ export default function Timeline({ events, highlightedIndex }: Props) {
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.abs(event.sentiment) * 100}%` }}
                           transition={{ duration: 1, ease: 'easeOut', delay: i * 0.1 + 0.3 }}
-                          className="h-full rounded-l-full bg-gradient-to-l from-red-500 to-red-600 shadow-[0_0_10px_rgba(255,77,77,0.5)]"
+                          className="h-full rounded-l-full bg-gradient-to-l from-red-500 to-red-600 shadow-sm"
                         />
                       )}
                     </div>
@@ -143,14 +143,14 @@ export default function Timeline({ events, highlightedIndex }: Props) {
                           initial={{ width: 0 }}
                           animate={{ width: `${event.sentiment * 100}%` }}
                           transition={{ duration: 1, ease: 'easeOut', delay: i * 0.1 + 0.3 }}
-                          className="h-full rounded-r-full bg-gradient-to-r from-[#00ff88] to-[#00cc6a] shadow-[0_0_10px_rgba(0,255,136,0.5)]"
+                          className="h-full rounded-r-full bg-gradient-to-r from-emerald-400 to-emerald-500 shadow-sm"
                         />
                       )}
                     </div>
                   </div>
                   <span
-                    className="font-mono text-[11px] font-bold w-10 text-right tabular-nums drop-shadow-md"
-                    style={{ color: event.sentiment >= 0 ? '#00ff88' : '#ff4d4d' }}
+                    className="text-[11px] font-bold w-10 text-right tabular-nums drop-shadow-sm"
+                    style={{ color: event.sentiment >= 0 ? 'var(--color-blue)' : 'var(--color-red)' }}
                   >
                     {event.sentiment > 0 ? '+' : ''}{event.sentiment.toFixed(2)}
                   </span>

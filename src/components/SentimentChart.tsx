@@ -19,11 +19,11 @@ interface Props {
 }
 
 const TAG_COLORS: Record<string, string> = {
-  bullish: '#00ff88',
-  bearish: '#ff4d4d',
-  critical: '#ff4d4d',
-  controversial: '#ffb347',
-  neutral: '#6b6b7a',
+  bullish: '#10b981',
+  bearish: '#f43f5e',
+  critical: '#f43f5e',
+  controversial: '#f59e0b',
+  neutral: '#6b7280',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,19 +52,19 @@ function CustomTooltip({ active, payload }: any) {
         initial={{ opacity: 0, scale: 0.95, y: 5 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.15, ease: 'easeOut' }}
-        className="bg-war-surface/95 border border-war-border rounded-xl p-4 max-w-xs backdrop-blur-xl"
-        style={{ boxShadow: `0 15px 35px -10px ${color}30`, borderColor: `${color}40` }}
+        className="bg-war-surface/95 border border-war-border rounded-xl p-4 max-w-xs backdrop-blur-xl shadow-xl"
+        style={{ borderColor: `${color}40` }}
       >
-        <p className="font-mono text-[10px] text-war-muted mb-2 uppercase tracking-widest">{d.date}</p>
-        <p className="font-syne text-[14px] text-white font-semibold mb-3 leading-snug drop-shadow-sm">{d.title}</p>
+        <p className="text-[11px] font-semibold text-war-muted mb-2 uppercase tracking-wider">{d.date}</p>
+        <p className="text-sm text-war-text font-bold mb-3 leading-snug">{d.title}</p>
         <div className="flex items-center justify-between pt-3 border-t border-war-border/50">
           <span
-            className="text-[10px] uppercase font-mono px-2.5 py-1 rounded-full font-bold shadow-sm"
+            className="text-[10px] uppercase px-2.5 py-1 rounded-full font-bold shadow-sm"
             style={{ background: `${color}15`, color, border: `1px solid ${color}30` }}
           >
             {d.tag}
           </span>
-          <span className="text-[13px] font-mono font-bold drop-shadow-sm" style={{ color }}>
+          <span className="text-[13px] font-bold drop-shadow-sm" style={{ color }}>
             {d.sentiment > 0 ? '+' : ''}{d.sentiment.toFixed(2)}
           </span>
         </div>
@@ -80,8 +80,8 @@ const renderActiveDot = (props: any) => {
   const color = TAG_COLORS[payload.tag] || '#4d9fff';
   return (
     <g>
-      <circle cx={cx} cy={cy} r={14} fill={color} opacity={0.2} className="animate-ping origin-center" style={{ transformOrigin: `${cx}px ${cy}px` }} />
-      <circle cx={cx} cy={cy} r={7} fill="#18181c" stroke={color} strokeWidth={3} style={{ filter: `drop-shadow(0 0 6px ${color})` }} />
+      <circle cx={cx} cy={cy} r={14} fill={color} opacity={0.15} className="animate-pulse origin-center" style={{ transformOrigin: `${cx}px ${cy}px` }} />
+      <circle cx={cx} cy={cy} r={7} fill="var(--color-surface)" stroke={color} strokeWidth={3} />
     </g>
   );
 };
@@ -106,34 +106,34 @@ export default function SentimentChart({ events, onEventHover }: Props) {
       >
         <defs>
           <linearGradient id="sentimentGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#00ff88" stopOpacity={0.15} />
-            <stop offset="95%" stopColor="#00ff88" stopOpacity={0} />
+            <stop offset="5%" stopColor="#10b981" stopOpacity={0.15} />
+            <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="sentimentGradientNeg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#ff4d4d" stopOpacity={0.15} />
-            <stop offset="95%" stopColor="#ff4d4d" stopOpacity={0} />
+            <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.15} />
+            <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="#1e1e24" />
-        <ReferenceLine y={0} stroke="#2a2a30" strokeWidth={1} />
+        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        <ReferenceLine y={0} stroke="var(--color-border)" strokeWidth={1} />
         <XAxis
           dataKey="date"
-          tick={{ fill: '#6b6b7a', fontSize: 10, fontFamily: 'JetBrains Mono' }}
-          axisLine={{ stroke: '#2a2a30' }}
+          tick={{ fill: 'var(--color-muted)', fontSize: 10, fontFamily: 'inherit' }}
+          axisLine={false}
           tickLine={false}
         />
         <YAxis
           domain={[-1.1, 1.1]}
           ticks={[-1, -0.5, 0, 0.5, 1]}
-          tick={{ fill: '#6b6b7a', fontSize: 10, fontFamily: 'JetBrains Mono' }}
-          axisLine={{ stroke: '#2a2a30' }}
+          tick={{ fill: 'var(--color-muted)', fontSize: 10, fontFamily: 'inherit' }}
+          axisLine={false}
           tickLine={false}
         />
         <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"
           dataKey="sentiment"
-          stroke="#00ff88"
+          stroke="#10b981"
           strokeWidth={2}
           fill="url(#sentimentGradient)"
           dot={<CustomDot />}

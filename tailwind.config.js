@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,36 +9,31 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['SFMono-Regular', 'ui-monospace', 'monospace'],
+        syne: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         war: {
-          bg: '#0a0a0b',
-          surface: '#111113',
-          card: '#18181c',
-          border: '#2a2a30',
-          accent: '#00ff88',
-          blue: '#4d9fff',
-          amber: '#ffb347',
-          red: '#ff4d4d',
-          muted: '#6b6b7a',
-          text: '#e8e8f0',
+          bg: 'var(--color-bg)',
+          surface: 'var(--color-surface)',
+          card: 'var(--color-card)',
+          border: 'var(--color-border)',
+          accent: 'var(--color-accent)',
+          blue: 'var(--color-blue)',
+          amber: 'var(--color-amber)',
+          red: 'var(--color-red)',
+          muted: 'var(--color-muted)',
+          text: 'var(--color-text)',
         },
       },
       animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'slide-up': 'slideUp 0.4s ease forwards',
-        'glow': 'glow 2s ease-in-out infinite alternate',
+        'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
         slideUp: {
           from: { opacity: 0, transform: 'translateY(16px)' },
           to: { opacity: 1, transform: 'translateY(0)' },
-        },
-        glow: {
-          from: { boxShadow: '0 0 5px rgba(0,255,136,0.3)' },
-          to: { boxShadow: '0 0 20px rgba(0,255,136,0.6)' },
         },
       },
     },

@@ -80,24 +80,27 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-war-bg font-syne">
       {/* Header */}
-      <header className="border-b border-war-border bg-war-surface/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-war-border bg-war-surface/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-war-accent pulse-dot" />
-            <span className="font-mono text-xs text-war-muted tracking-widest uppercase">
-              Story Arc Tracker
+            <svg className="w-5 h-5 text-war-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span className="font-semibold text-sm text-war-text tracking-tight">
+              Arc Intelligence
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] text-war-muted hidden sm:block">
-              Investigative Intelligence Board
+            <span className="text-[11px] text-war-muted hidden sm:block font-medium">
+              Information Workspace
             </span>
-            <div className="flex items-center gap-1.5 border border-war-accent/20 px-2.5 py-1 rounded-md bg-war-accent/5">
-              <span className="w-1.5 h-1.5 rounded-full bg-war-accent animate-pulse" />
-              <span className="font-mono text-[9px] text-war-accent uppercase tracking-wider font-semibold">
-                System Online
-              </span>
-            </div>
+            <button
+              onClick={() => document.documentElement.classList.toggle('dark')}
+              className="p-1.5 rounded-md hover:bg-war-border transition-colors text-war-muted"
+              title="Toggle Theme"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
           </div>
         </div>
       </header>
@@ -110,23 +113,17 @@ export default function HomePage() {
           transition={{ duration: 0.5 }}
           className="text-center space-y-4 pt-4"
         >
-          <div className="inline-flex items-center gap-3 border border-war-border rounded-full px-5 py-2 bg-war-surface shadow-[0_4px_20px_-10px_rgba(0,0,0,0.5)] transition-colors hover:border-war-accent/30 cursor-default">
-            <div className="relative flex items-center justify-center">
-              <span className="absolute w-3 h-3 rounded-full bg-war-accent animate-ping opacity-40" />
-              <span className="relative w-1.5 h-1.5 rounded-full bg-war-accent" />
-            </div>
-            <span className="font-mono text-[10px] text-war-text uppercase tracking-[0.2em] font-medium">
-              Live Intelligence Engine
+          <div className="inline-flex items-center gap-2 border border-war-border rounded-full px-4 py-1.5 bg-war-surface transition-colors cursor-default">
+            <span className="relative w-1.5 h-1.5 rounded-full bg-war-accent" />
+            <span className="text-[11px] text-war-text font-medium tracking-wide">
+              Article Analysis Module
             </span>
           </div>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-syne font-bold text-war-text leading-[1.1] tracking-tight">
-            Story Arc
-            <span className="text-war-accent relative inline-block">
-              <span className="relative z-10 px-2 drop-shadow-[0_0_15px_rgba(0,255,136,0.3)]">Tracker</span>
-            </span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-war-text leading-[1.1] tracking-tight">
+            Story Arc Tracker
           </h1>
-          <p className="font-mono text-sm text-war-muted max-w-2xl mx-auto leading-loose">
-            Paste any news article URL to extract real-time intelligence. 
+          <p className="text-sm text-war-muted max-w-2xl mx-auto leading-relaxed">
+            Paste any news article URL to extract structured intelligence. 
             Instantly generate a full investigative board — including sentiment arcs, narrative timelines, 
             entity relationship maps, and contrarian viewpoints.
           </p>
@@ -154,33 +151,32 @@ export default function HomePage() {
             <button
               onClick={analyze}
               disabled={loading || !url.trim()}
-              className="bg-war-accent text-war-bg font-syne font-bold px-8 py-4 rounded-xl hover:bg-war-accent/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 whitespace-nowrap text-sm relative z-10 overflow-hidden group shadow-[0_0_20px_rgba(0,255,136,0.1)] hover:shadow-[0_0_30px_rgba(0,255,136,0.25)]"
+              className="bg-war-text text-war-bg font-semibold px-8 py-4 rounded-xl hover:bg-war-muted hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap text-sm z-10"
             >
-              <div className="absolute inset-0 w-[200%] h-full bg-white/20 -translate-x-[150%] group-hover:translate-x-[50%] transition-transform duration-[800ms] ease-in-out skew-x-12" />
-              <span className="relative z-20 flex items-center justify-center gap-2">
+              <span className="flex items-center justify-center gap-2">
                 {loading ? (
                   <>
                     <span className="w-4 h-4 rounded-full border-2 border-war-bg border-t-transparent animate-spin" />
-                    Extracting...
+                    Analyzing
                   </>
-                ) : 'Extract Intelligence →'}
+                ) : 'Analyze Article →'}
               </span>
             </button>
           </div>
 
           {/* Supported sites toggle */}
-          <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
             <button
               onClick={() => setShowSites(!showSites)}
-              className="font-mono text-[10px] text-war-muted hover:text-war-accent transition-colors"
+              className="text-xs font-medium text-war-muted hover:text-war-text transition-colors"
             >
-              {showSites ? '▾' : '▸'} Supported sites
+              {showSites ? '▾' : '▸'} Supported platforms
             </button>
             {EXAMPLE_URLS.map((ex) => (
               <button
                 key={ex.label}
                 onClick={() => setUrl(ex.url)}
-                className="font-mono text-[10px] text-war-muted border border-war-border px-2 py-1 rounded-full hover:border-war-accent/50 hover:text-war-accent transition-all"
+                className="text-[11px] font-medium text-war-muted border border-war-border px-2.5 py-1 rounded-full hover:border-war-accent hover:text-war-accent transition-all"
               >
                 {ex.label} ↗
               </button>
@@ -196,23 +192,23 @@ export default function HomePage() {
                 exit={{ opacity: 0, height: 0 }}
                 className="overflow-hidden"
               >
-                <div className="bg-war-surface border border-war-border rounded-xl p-4">
-                  <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-3">
-                    Works well with
+                <div className="bg-war-surface border border-war-border rounded-xl p-4 mt-2">
+                  <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-3">
+                    Supported Sources
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {SUPPORTED_SITES.map((site) => (
                       <span
                         key={site}
-                        className="font-mono text-[10px] bg-war-card border border-war-border rounded-full px-3 py-1 text-war-muted"
+                        className="text-[11px] font-medium bg-war-card border border-war-border rounded-full px-3 py-1 text-war-muted"
                       >
                         {site}
                       </span>
                     ))}
                   </div>
-                  <p className="font-mono text-[9px] text-war-muted mt-3">
-                    Note: Sites with JS-only rendering or hard paywalls may not extract content.
-                    Use the full direct article URL, not homepage URLs.
+                  <p className="text-[11px] text-war-muted mt-3">
+                    Note: Sites with Javascript-only rendering or hard paywalls may not extract properly.
+                    Use direct article URLs (e.g., specific news reports).
                   </p>
                 </div>
               </motion.div>
@@ -264,13 +260,13 @@ export default function HomePage() {
               <div className="border border-war-border rounded-xl p-5 bg-war-card">
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                   <div className="space-y-1.5">
-                    <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest">
-                      Intelligence Report
+                    <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
+                      Executive Summary
                     </p>
-                    <h2 className="font-syne text-xl font-bold text-war-text leading-snug">
+                    <h2 className="text-xl font-bold text-war-text leading-snug">
                       {result.headline}
                     </h2>
-                    <p className="font-mono text-xs text-war-muted leading-relaxed max-w-2xl">
+                    <p className="text-sm text-war-muted leading-relaxed max-w-2xl">
                       {result.summary}
                     </p>
                   </div>
@@ -279,11 +275,11 @@ export default function HomePage() {
                       href={result.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[10px] text-war-accent border border-war-accent/30 px-3 py-1.5 rounded-lg hover:bg-war-accent/10 transition-colors"
+                      className="text-xs font-medium text-war-accent border border-war-accent/30 px-3 py-1.5 rounded-lg hover:bg-war-accent/10 transition-colors"
                     >
                       View Source ↗
                     </a>
-                    <span className="font-mono text-[9px] text-war-muted">
+                    <span className="text-[10px] text-war-muted">
                       {new Date(result.scrapedAt).toLocaleString()}
                     </span>
                   </div>
@@ -294,17 +290,17 @@ export default function HomePage() {
               <MetricsRow data={result} />
 
               {/* Sentiment Pulse */}
-              <div className="bg-war-card border border-war-border rounded-xl p-5 hover:border-war-accent/30 transition-all duration-300 shadow-lg group">
+              <div className="bg-war-card border border-war-border rounded-xl p-5 hover:border-war-muted transition-all duration-300 shadow-sm group">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-1 group-hover:text-war-accent transition-colors">
-                      Sentiment Pulse
+                    <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-1 group-hover:text-war-accent transition-colors">
+                      Market Sentiment
                     </p>
-                    <p className="font-syne text-sm text-war-text">
+                    <p className="text-sm font-medium text-war-text">
                       Narrative Arc Visualisation
                     </p>
                   </div>
-                  <div className="font-mono text-[10px] text-war-muted text-right opacity-50 group-hover:opacity-100 transition-opacity">
+                  <div className="text-[11px] text-war-muted text-right opacity-50 group-hover:opacity-100 transition-opacity">
                     <p>Hover chart points</p>
                     <p>to highlight events</p>
                   </div>
@@ -317,19 +313,19 @@ export default function HomePage() {
 
               {/* Timeline + Entity Web */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-war-card border border-war-border rounded-xl p-5 h-full group hover:border-war-accent/30 transition-all duration-300">
-                  <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-1 group-hover:text-war-accent transition-colors">
+                <div className="bg-war-card border border-war-border rounded-xl p-5 h-full group hover:border-war-muted transition-all duration-300 shadow-sm">
+                  <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-1 group-hover:text-war-accent transition-colors">
                     Narrative Scroll
                   </p>
-                  <p className="font-syne text-sm text-war-text mb-4">Chronological Timeline</p>
+                  <p className="text-sm font-medium text-war-text mb-4">Chronological Timeline</p>
                   <Timeline events={result.events} highlightedIndex={highlightedEvent} />
                 </div>
 
-                <div className="bg-war-card border border-war-border rounded-xl p-5 h-full group hover:border-war-accent/30 transition-all duration-300">
-                  <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-1 group-hover:text-war-accent transition-colors">
-                    Entity Connection Web
+                <div className="bg-war-card border border-war-border rounded-xl p-5 h-full group hover:border-war-muted transition-all duration-300 shadow-sm">
+                  <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-1 group-hover:text-war-accent transition-colors">
+                    Entity Web
                   </p>
-                  <p className="font-syne text-sm text-war-text mb-4">Key Players & Relationships</p>
+                  <p className="text-sm font-medium text-war-text mb-4">Key Players & Relationships</p>
                   <EntityWeb entities={result.entities} mermaidDiagram={result.mermaidDiagram} />
                 </div>
               </div>
@@ -337,14 +333,14 @@ export default function HomePage() {
               {/* Deep Analysis Panels */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Contrarian viewpoints */}
-                <div className="border-l-2 border-war-blue bg-war-card rounded-r-xl p-5 shadow-lg group hover:bg-war-surface transition-colors">
+                <div className="border-l-2 border-war-blue bg-war-card rounded-r-xl p-5 shadow-sm group hover:bg-war-surface transition-colors">
                   <div className="w-full flex items-center justify-between">
                     <div>
-                      <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-1 group-hover:text-war-blue transition-colors">
-                        Devil's Advocate Protocol
+                      <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-1 group-hover:text-war-blue transition-colors">
+                        Contrarian Perspectives
                       </p>
-                      <p className="font-syne text-sm text-war-blue font-medium">
-                        Contrarian & Alternative Perspectives
+                      <p className="text-sm text-war-blue font-medium">
+                        Alternative Viewpoints & Criticisms
                       </p>
                     </div>
                   </div>
@@ -358,24 +354,24 @@ export default function HomePage() {
                         transition={{ delay: i * 0.07 }}
                         className="flex gap-3 p-3 bg-war-surface/50 rounded-lg border border-war-border group-hover:bg-war-surface transition-colors"
                       >
-                        <span className="font-mono text-xs text-war-blue mt-0.5 opacity-80">
+                        <span className="text-xs font-semibold text-war-blue mt-0.5 opacity-80">
                           {['Bear', 'Bull', 'Alt'][i % 3]}
                         </span>
-                        <p className="font-mono text-[11px] text-war-muted leading-relaxed">{vp}</p>
+                        <p className="text-xs text-war-muted leading-relaxed">{vp}</p>
                       </motion.div>
                     ))}
                   </div>
                 </div>
 
                 {/* Horizon Radar */}
-                <div className="border-l-2 border-war-accent bg-war-card rounded-r-xl p-5 shadow-lg group hover:bg-war-surface transition-colors">
+                <div className="border-l-2 border-war-accent bg-war-card rounded-r-xl p-5 shadow-sm group hover:bg-war-surface transition-colors">
                   <div className="w-full flex items-center justify-between">
                     <div>
-                      <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest mb-1 group-hover:text-war-accent transition-colors">
-                        Horizon Radar
+                      <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-1 group-hover:text-war-accent transition-colors">
+                        Forward Outlook
                       </p>
-                      <p className="font-syne text-sm text-war-accent font-medium">
-                        What To Watch Next (Predictions)
+                      <p className="text-sm text-war-accent font-medium">
+                        Predicted Developments
                       </p>
                     </div>
                   </div>
@@ -398,21 +394,21 @@ export default function HomePage() {
                           className="flex flex-col gap-2 p-3 bg-war-surface/50 rounded-lg border border-war-border group-hover:bg-war-surface transition-colors"
                         >
                           <div className="flex justify-between items-center">
-                             <span className={`font-mono text-[9px] uppercase px-1.5 py-0.5 rounded border ${PCol}`}>{pred.probability} Prob</span>
-                             <span className="font-mono text-[9px] text-war-muted tracking-widest uppercase">{pred.timeframe}</span>
+                             <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded border ${PCol}`}>{pred.probability} Prob</span>
+                             <span className="text-[10px] text-war-muted font-medium uppercase">{pred.timeframe}</span>
                           </div>
-                          <p className="font-syne text-[12px] text-war-text leading-snug">{pred.implication}</p>
+                          <p className="text-sm text-war-text leading-snug">{pred.implication}</p>
                         </motion.div>
                       );
                     }) : (
-                      <p className="font-mono text-xs text-war-muted">Predictions are only available for newly generated reports.</p>
+                      <p className="text-sm text-war-muted">Predictions are only available for newly generated reports.</p>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* New analysis CTA */}
-              <div className="flex flex-wrap items-center justify-center gap-4 py-8 border-t border-war-border/50">
+              <div className="flex flex-wrap items-center justify-center gap-3 py-8 border-t border-war-border">
                 <button
                   onClick={() => {
                     setResult(null);
@@ -421,25 +417,25 @@ export default function HomePage() {
                     inputRef.current?.focus();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="font-mono text-xs text-war-muted border border-war-border px-5 py-2.5 rounded-xl hover:border-war-accent/50 hover:text-war-accent hover:bg-war-surface transition-all"
+                  className="text-xs font-medium text-war-muted border border-war-border px-5 py-2.5 rounded-xl hover:border-war-text hover:text-war-text hover:bg-war-surface transition-all"
                 >
-                  ← New Investigation
+                  ← New Analysis
                 </button>
                 
                 <button
                   onClick={() => {
                     alert("Mock: In a production environment, this would split the screen and allow you to paste another URL to append its extracted entities and events to the current graph, building a multi-month Story Arc.");
                   }}
-                  className="font-mono text-xs text-war-bg bg-war-text px-5 py-2.5 rounded-xl hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-lg flex items-center gap-2"
+                  className="text-xs font-semibold text-war-bg bg-war-text px-5 py-2.5 rounded-xl hover:bg-war-muted hover:scale-105 active:scale-95 transition-all shadow-sm flex items-center gap-2"
                 >
                   ➕ Add Source to Arc
                 </button>
 
                 <button
                   onClick={() => window.print()}
-                  className="font-mono text-xs text-war-accent border border-war-accent/30 bg-war-accent/10 px-5 py-2.5 rounded-xl hover:bg-war-accent/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                  className="text-xs font-semibold text-war-blue border border-war-blue/30 bg-war-blue/10 px-5 py-2.5 rounded-xl hover:bg-war-blue/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
                 >
-                  ⬇ Export Intel Briefing
+                  ⬇ Export Briefing
                 </button>
               </div>
             </motion.div>

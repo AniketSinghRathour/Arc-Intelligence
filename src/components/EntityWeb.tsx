@@ -10,10 +10,10 @@ interface Props {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  person: '#4d9fff',
-  company: '#00ff88',
-  regulator: '#ff4d4d',
-  institution: '#ffb347',
+  person: '#3b82f6',
+  company: '#10b981',
+  regulator: '#f43f5e',
+  institution: '#f59e0b',
 };
 
 type Edge = { source: string; target: string; label: string; isActive: boolean; isDimmed: boolean; labelX?: number; labelY?: number };
@@ -139,13 +139,13 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
             >
               <div className="flex items-center gap-2 py-1.5">
                 <div
-                  className={`w-2 h-2 rounded-full flex-shrink-0 transition-shadow ${isActive ? 'shadow-[0_0_12px_currentColor]' : 'shadow-[0_0_4px_currentColor]'}`}
+                  className={`w-2 h-2 rounded-full flex-shrink-0 transition-shadow ${isActive ? 'shadow-[0_0_8px_currentColor]' : 'shadow-sm'}`}
                   style={{ background: color, color: color }}
                 />
-                <span className={`font-syne text-sm font-medium transition-colors ${isActive ? 'text-white' : 'text-war-text group-hover:text-white'}`}>{entity.name}</span>
-                <span className={`font-mono text-[10px] ml-auto transition-colors ${isActive ? 'text-war-accent' : 'text-war-muted group-hover:text-war-text'}`}>{entity.role}</span>
+                <span className={`text-sm font-semibold transition-colors ${isActive ? 'text-war-text dark:text-white' : 'text-war-text group-hover:text-war-text/80'}`}>{entity.name}</span>
+                <span className={`text-xs ml-auto transition-colors font-medium ${isActive ? 'text-war-text' : 'text-war-muted'}`}>{entity.role}</span>
                 <span
-                  className="font-mono text-[9px] px-1.5 py-0.5 rounded-full border shadow-sm group-hover:shadow-md transition-shadow"
+                  className="text-[10px] px-2 py-0.5 rounded-full border shadow-sm font-semibold ml-1"
                   style={{ borderColor: `${color}40`, color, backgroundColor: `${color}10` }}
                 >
                   {entity.type}
@@ -154,8 +154,8 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
               {(entity.connections || []).map((conn, j) => (
                 <div key={j} className="flex items-center gap-2 pl-4 py-0.5 opacity-80 group-hover:opacity-100 transition-opacity">
                   <div className="w-4 h-px bg-war-border flex-shrink-0 group-hover:bg-war-text transition-colors" />
-                  <span className="font-mono text-[10px] text-war-muted italic group-hover:text-war-text/70 transition-colors">{conn.label}</span>
-                  <span className="font-mono text-[10px] text-war-text">→ {conn.target}</span>
+                  <span className="text-[11px] font-medium text-war-muted group-hover:text-war-text transition-colors">{conn.label}</span>
+                  <span className="text-[11px] font-semibold text-war-text">→ {conn.target}</span>
                 </div>
               ))}
             </motion.div>
@@ -166,10 +166,10 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
       {/* 2. Slideable Diagram (Mermaid) */}
       <div className="border border-war-border rounded-lg p-3 bg-war-surface flex flex-col pt-4 shadow-xl">
         <div className="flex justify-between items-center mb-3">
-          <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest">
-            Structural Relationship Graph
+          <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
+            Structural Blueprint
           </p>
-          <p className="font-mono text-[9px] text-war-accent opacity-80 animate-pulse">
+          <p className="text-[11px] font-medium text-war-muted">
             Scroll to pan &rarr;
           </p>
         </div>
@@ -195,11 +195,11 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
       {/* 3. Global Network Map */}
       <div className="border border-war-border rounded-xl p-4 bg-war-surface shadow-2xl">
         <div className="flex justify-between items-center mb-4">
-          <p className="font-mono text-[9px] text-war-muted uppercase tracking-widest">
-            Global Network Map
+          <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
+            Interactive Topology
           </p>
-          <span className="font-mono text-[9px] text-war-accent opacity-80 animate-pulse">
-            Hover nodes to trace paths &rarr;
+          <span className="text-[11px] font-medium text-war-muted">
+            Hover nodes to explore &rarr;
           </span>
         </div>
 
@@ -257,7 +257,7 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
                 className="absolute -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none"
                 style={{ left: `${(edge.labelX / 1000) * 100}%`, top: `${(edge.labelY / 1000) * 100}%` }}
               >
-                <div className="bg-[#0a0a0b] text-[8.5px] font-medium text-war-accent border border-war-accent/30 px-1.5 py-0.5 rounded whitespace-nowrap shadow-[0_0_10px_rgba(0,255,136,0.2)] backdrop-blur-sm -rotate-3">
+                <div className="bg-war-surface text-[10px] font-medium text-war-text border border-war-border px-1.5 py-0.5 rounded whitespace-nowrap shadow-sm backdrop-blur-sm -translate-y-2">
                   {edge.label}
                 </div>
               </div>
@@ -308,12 +308,12 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
         <div className="flex flex-wrap gap-3">
           {Object.entries(TYPE_COLORS).map(([type, color]) => (
             <div key={type} className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full" style={{ background: color }} />
-              <span className="font-mono text-[10px] text-war-muted capitalize">{type}</span>
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+              <span className="text-[11px] font-medium text-war-muted capitalize">{type}</span>
             </div>
           ))}
         </div>
-        <p className="font-mono text-[10px] text-war-muted opacity-50 text-right">
+        <p className="text-[11px] font-medium text-war-muted text-right">
           Total Nodes: {allNodes.length} &bull; Detected Links: {edges.length}
         </p>
       </div>
