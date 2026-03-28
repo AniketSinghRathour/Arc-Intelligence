@@ -1,81 +1,71 @@
-# Story Arc Tracker: Investigative Intelligence Engine
+# Story Arc Tracker
 
-An **AI-native news intelligence dashboard** designed to transform static, one-dimensional business articles into a fully interactive, multi-dimensional investigative dossier. Built to answer the 2026 prompt: *"Business news is still delivered like it's 2005."*
+**Story Arc Tracker** is an elegant, AI-native intelligence dashboard that transforms static news articles into high-fidelity investigative boards. 
 
-## 🎯 What it is
-Instead of reading thousands of words to understand a complex corporate saga, the **Story Arc Tracker** digests any news URL and instantly constructs a comprehensive visual brief. It maps out the exact timeline, flags sentiment shifts, plots key entity relationships natively, predicts future actions, and provides contrarian viewpoints.
+Rather than parsing through thousands of words across multiple sources, simply paste a news URL and let the tracker instantly extract the narrative chronology, map out corporate/political entities, and calculate the overall market sentiment.
 
-## 🚀 Impact (The Core Value Proposition)
-This engine explicitly fulfills the requirement to "make people say 'I can't go back to reading news the old way'." 
+## ✨ Features
 
-By supplying the AI with specialized analytical directives, we generate:
-1. **Interactive Timelines**: Automatically breaks down narrative history.
-2. **Key Players Mapped**: Discards messy graphs for a pristine, hover-reactive Global Radial Network Map showing every relationship tie.
-3. **Sentiment Shifts Tracked**: Maps the emotional and operational trajectory onto an interactive Recharts pulse area graph.
-4. **Contrarian Perspectives Surfaced**: Our "Devil's Advocate Protocol" explicitly identifies the opposing views and market warnings.
-5. **What to Watch Next**: Our "Horizon Radar" actively predicts subsequent market or corporate moves natively derived from the generated Arc.
+- **Automated Summary:** Generates concise, high-level intelligence briefs from raw article data.
+- **Narrative Scroll (Interactive Timeline):** Chronological extraction of key events. Watch as the UI's localized energy pulse tracks your cursor down the timeline.
+- **Entity Web:** A pristine, hover-reactive Global Radial Network Map (powered by Mermaid.js) mapping relationships between companies, individuals, and institutions. Includes an interactive full-screen zoom feature.
+- **Market Sentiment Pulse:** Bi-directional impact graph that visualizes the positive, negative, or controversial nature of the news over time.
+- **Future Horizon Predictions:** Active predictive modeling of subsequent market or corporate moves natively derived from the generated narrative arc.
+- **Devil's Advocate Protocol:** Explicitly surfaces contrarian perspectives, identifying blind spots or counter-narratives not immediately obvious in the source material.
 
-## 🏗 Architecture & Tech Stack
-The platform is designed as a highly performant, serverless Next.js application that leverages the latest in Generative AI and fluid UI/UX design:
+## 🛠️ Tech Stack
 
-```mermaid
-graph TD
-    A[User Input: News URL] -->|POST /api/analyze| B(Next.js Serverless Route)
-    B -->|Fetch remote DOM| C{Cheerio Web Scraper}
-    C -->|Extract Semantic Body| D[Google Gemini 2.5 API]
-    D -.->|Strict JSON Schema Generation| E[(Structured Intelligence Payload)]
-    
-    E -->|1. Event Chronology \n2. Entity Network \n3. Future Predictions| F(Next.js Client Provider)
-    
-    F -->|Framer Motion| G[Interactive Glassmorphic UI]
-    F -->|Recharts| H[Sentiment Arc Pulse Graph]
-    F -->|Custom SVG Math| I[Global Radial Network Map]
+- **Framework:** Next.js 15 (App Router, React 18)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS (Custom Dark/Glassmorphic Themes)
+- **Animations:** Framer Motion
+- **Visualizations:** Recharts, Mermaid.js
+- **AI Engine:** Google Gemini 2.5 Flash API (Structured JSON Extraction)
+- **Data Scraping:** Cheerio (Serverless API extraction)
 
-    classDef client fill:#0a0a0b,stroke:#ff4d4d,stroke-width:1px,color:#e8e8f0,shape:rounded
-    classDef server fill:#111113,stroke:#00ff88,stroke-width:2px,color:#e8e8f0,shape:rounded
-    classDef ai fill:#0a0a0b,stroke:#4d9fff,stroke-width:2px,color:#e8e8f0,shape:barrel
+## 🚀 Getting Started
 
-    A:::client
-    B:::server
-    C:::server
-    D:::ai
-    E:::ai
-    F:::client
-    G:::client
-    H:::client
-    I:::client
-```
+### Prerequisites
+- Node.js 18+
+- A Google Gemini API Key
 
-*   **Frontend Framework**: Next.js 15 (App Router) & React 18.
-*   **Intelligence Extraction API**: Google Gemini 2.5 Flash API explicitly constrained via rigid JSON schemas to guarantee zero hallucination.
-*   **Web Scraping**: Cheerio (extracting semantic HTML body text via secure serverless routes).
-*   **UI/UX & Styling**: Tailwind CSS, utilizing a dark-mode "glassmorphism" aesthetic modeled after proprietary high-end analytics terminals.
-*   **Animations**: Framer Motion for critical micro-interactions (e.g., Timeline card glows, hovering network node expansions).
-*   **Data Visualization**: Recharts (with custom dot pings and animated tooltips) & bespoke SVG math rendering for the networking map.
+### Installation
 
-## 🧩 How it Works (The Pipeline)
-1. **Ingest**: User pastes a supported news URL into the command line interface.
-2. **Scraping**: A Next.js serverless route fetches the HTML and strips away ads, cookie banners, and navigation, isolating the pure article body.
-3. **AI Synthesis**: The raw text is passed to Gemini via a strict `SYSTEM_PROMPT`. The prompt legally forces the AI to construct an `AnalysisResult` JSON object mapping out strictly: *Events, Entities, Connections, Alternative Views, Predictions, and Sentiments.*
-4. **Render**: The React UI ingests the JSON payload. Components mount with Framer Motion, and the static story is morphed into an interactive intelligence module.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/story-arc-tracker.git
+   cd story-arc-tracker
+   ```
 
-## 📚 Analytical Terminology
-Understanding the outputs generated by the Intelligence Engine:
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### Event Pulse Tags
-Every plotted event on the timeline is tagged by the AI to instantly communicate the stakes:
-*   **Bullish**: Positive growth, upward momentum, optimism (e.g., "Company secures $50M Series A").
-*   **Bearish**: Decline, market pessimism, extreme caution (e.g., "Quarterly earnings drop 15%").
-*   **Neutral**: Purely informational context (e.g., "CEO schedules routine press conference").
-*   **Critical**: High-stakes, pivotal moments that threaten the entire status quo (e.g., "SEC announces formal investigation").
-*   **Controversial**: Polarizing events causing extreme market division (e.g., "Hostile takeover bid launched").
+3. **Configure Environment Variables:**
+   Create a `.env.local` file in the root directory and add your API credentials:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
 
-### Narrative Arc Types (The "Genre")
-The overarching trajectory of the entire story is categorized into an Arc Type:
-*   **Bullish Growth**: Skyrocketing trajectory; beating the odds.
-*   **Crisis Spiral**: A disaster scenario where negative news continuously compounds.
-*   **Cautious Recovery**: Repairing reputation or finances following heavy losses.
-*   **Power Shift**: Dramatic boardroom shakeups or executive coups.
-*   **Regulatory Storm**: A company forced to face heavy government action or fines.
-*   **Turnaround Play**: A massive strategic pivot to save a legacy business.
-*   **Stagnation**: Slow decline, flat numbers, or fading relevance.
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the app:**
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🕹️ Usage
+
+1. Paste any supported news URL (e.g., Economic Times, Reuters, Bloomberg public articles) into the main input bar.
+2. Click **Analyze Article →**.
+3. The platform will securely fetch the HTML, strip out the noise, pass it through the specialized Gemini System Prompt, and instantly dynamically render your interactive intelligence dashboard.
+
+## 🤝 Contributing
+
+Contributions are always welcome. Please feel free to open an issue or submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.

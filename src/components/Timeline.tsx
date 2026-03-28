@@ -6,6 +6,7 @@ import { NewsEvent } from '@/lib/types';
 interface Props {
   events: NewsEvent[];
   highlightedIndex: number | null;
+  onEventHover?: (index: number | null) => void;
 }
 
 const TAG_COLORS: Record<string, { bg: string; text: string; dot: string; glow: string }> = {
@@ -16,17 +17,31 @@ const TAG_COLORS: Record<string, { bg: string; text: string; dot: string; glow: 
   neutral:       { bg: 'rgba(107, 114, 128, 0.1)',  text: '#6b7280', dot: '#6b7280', glow: 'rgba(107, 114, 128, 0.15)' },
 };
 
-export default function Timeline({ events, highlightedIndex }: Props) {
+export default function Timeline({ events, highlightedIndex, onEventHover }: Props) {
   return (
     <div className="relative pt-4 pb-6 px-2">
-      {/* Vertical tracking line */}
-      <motion.div 
-        initial={{ height: 0 }}
-        animate={{ height: '100%' }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-        style={{ transformOrigin: 'top' }}
-        className="absolute left-[23px] top-8 w-[2px] bg-gradient-to-b from-war-border via-war-border/50 to-transparent rounded-full z-0" 
-      />
+      {/* Vertical tracking line with energy pulse */}
+      <div className="absolute left-[23px] top-8 bottom-6 w-[2px] overflow-hidden rounded-full z-0">
+        <motion.div 
+          initial={{ height: 0 }}
+          animate={{ height: '100%' }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          style={{ transformOrigin: 'top' }}
+          className="w-full h-full bg-gradient-to-b from-war-border via-war-border/50 to-transparent absolute inset-0" 
+        />
+        {/* Dynamic Highlight Fill */}
+        <motion.div
+          initial={{ opacity: 0, height: '0%' }}
+          animate={{ 
+            opacity: highlightedIndex !== null ? 1 : 0,
+            height: highlightedIndex !== null 
+                   ? `calc(${(highlightedIndex / Math.max(events.length - 1, 1)) * 100}% + 32px)` 
+                   : '0%'
+          }}
+          transition={{ type: "spring", stiffness: 150, damping: 20 }}
+          className="absolute left-0 top-0 w-full bg-gradient-to-b from-transparent via-war-accent/50 to-war-accent opacity-80 shadow-[0_4px_12px_var(--color-accent)] blur-[1px] rounded-full"
+        />
+      </div>
 
       <div className="space-y-8">
         {events.map((event, i) => {
@@ -40,6 +55,8 @@ export default function Timeline({ events, highlightedIndex }: Props) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08, type: 'spring', stiffness: 200, damping: 20 }}
               className="flex gap-5 relative group"
+              onMouseEnter={() => onEventHover?.(i)}
+              onMouseLeave={() => onEventHover?.(null)}
             >
               {/* Dot column */}
               <div className="w-8 flex-shrink-0 flex justify-center mt-5 relative z-10 h-max">

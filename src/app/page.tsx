@@ -83,7 +83,11 @@ export default function HomePage() {
       <header className="border-b border-war-border bg-war-surface/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <svg className="w-5 h-5 text-war-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 3v18h18" /><path strokeLinecap="round" strokeLinejoin="round" d="m19 9-5 5-4-4-3 3" /></svg>
+            <svg className="w-5 h-5 text-war-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+              <path d="M2 12h20"/>
+            </svg>
             <span className="font-semibold text-sm text-war-text tracking-tight">
               News Arc Analytics
             </span>
@@ -104,13 +108,13 @@ export default function HomePage() {
           transition={{ duration: 0.5 }}
           className="text-center space-y-4 pt-4"
         >
-          <div className="inline-flex items-center gap-2 border border-war-border rounded-full px-4 py-1.5 bg-war-surface transition-colors cursor-default">
+          <div className="inline-flex items-center gap-2 border border-war-border rounded-full px-4 py-1.5 bg-war-surface shadow-sm transition-colors cursor-default">
             <span className="relative w-1.5 h-1.5 rounded-full bg-war-accent" />
-            <span className="text-[11px] text-war-text font-medium tracking-wide">
-              Article Analysis Module
+            <span className="text-[11px] text-war-text font-bold tracking-wider uppercase">
+              Article Analysis
             </span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-war-text leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-war-text leading-[1.1] tracking-tighter">
             News Arc Tracker
           </h1>
           <p className="text-sm text-war-muted max-w-2xl mx-auto leading-relaxed">
@@ -260,7 +264,7 @@ export default function HomePage() {
                     Narrative Scroll
                   </p>
                   <p className="text-sm font-medium text-war-text mb-4">Chronological Timeline</p>
-                  <Timeline events={result.events} highlightedIndex={highlightedEvent} />
+                  <Timeline events={result.events} highlightedIndex={highlightedEvent} onEventHover={setHighlightedEvent} />
                 </div>
 
                 <div className="bg-war-card border border-war-border rounded-xl p-5 h-full group hover:border-war-muted transition-all duration-300 shadow-sm">
