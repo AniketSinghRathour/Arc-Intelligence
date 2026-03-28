@@ -25,6 +25,8 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
   // Mermaid State
   const [svgStr, setSvgStr] = useState<string | null>(null);
   const [renderError, setRenderError] = useState(false);
+  const [isMermaidEnlarged, setIsMermaidEnlarged] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(2.5);
 
   useEffect(() => {
     let cancelled = false;
@@ -74,7 +76,7 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
           setRenderError(false);
         }
       } catch (err) {
-        console.error('Mermaid render error:', err);
+        console.warn('Mermaid render issue gracefully caught.');
         if (!cancelled) setRenderError(true);
       }
     }
@@ -166,9 +168,17 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
       {/* 2. Slideable Diagram (Mermaid) */}
       <div className="border border-war-border rounded-lg p-3 bg-war-surface flex flex-col pt-4 shadow-xl">
         <div className="flex justify-between items-center mb-3">
-          <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
-            Structural Blueprint
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider">
+              Structural Blueprint
+            </p>
+            <button 
+              onClick={() => setIsMermaidEnlarged(true)}
+              className="text-[10px] px-2 py-0.5 rounded border border-war-border hover:border-war-accent hover:text-war-accent transition-colors"
+            >
+              Enlarge ↗
+            </button>
+          </div>
           <p className="text-[11px] font-medium text-war-muted">
             Scroll to pan &rarr;
           </p>
@@ -181,7 +191,7 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
             </pre>
           </div>
         ) : (
-          <div className="relative overflow-auto min-h-[15rem] bg-[#0a0a0b] border border-war-border/30 rounded-lg p-4 shadow-inner cursor-grab active:cursor-grabbing">
+          <div className="relative overflow-auto min-h-[15rem] bg-war-surface border border-war-border/30 rounded-lg p-4 shadow-inner cursor-grab active:cursor-grabbing">
             {!svgStr && (
               <div className="shimmer rounded h-full w-full absolute inset-0 z-10 bg-war-surface" />
             )}
@@ -203,17 +213,17 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
           </span>
         </div>
 
-        <div className="relative w-full h-[450px] sm:h-[550px] bg-[#0a0a0b] border border-war-border/30 rounded-lg overflow-hidden shadow-inner font-mono">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px]" />
+        <div className="relative w-full h-[450px] sm:h-[550px] bg-war-surface border border-war-border/30 rounded-lg overflow-hidden shadow-inner font-mono">
+          <div className="absolute inset-0 bg-[linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] bg-[size:20px_20px] opacity-20" />
 
           {/* SVG layer for edges */}
           <svg viewBox="0 0 1000 1000" className="absolute inset-0 w-full h-full pointer-events-none">
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="35" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#2a2a30" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-muted)" />
               </marker>
               <marker id="arrow-active" viewBox="0 0 10 10" refX="35" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ff88" />
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-accent)" />
               </marker>
             </defs>
 
@@ -238,7 +248,7 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
                 <path
                   key={`edge-${i}`}
                   d={`M ${p1.x} ${p1.y} Q ${cx} ${cy} ${p2.x} ${p2.y}`}
-                  stroke={edge.isActive ? '#00ff88' : '#2a2a30'}
+                  stroke={edge.isActive ? 'var(--color-accent)' : 'var(--color-border)'}
                   strokeWidth={edge.isActive ? 3 : 1.5}
                   fill="none"
                   markerEnd={edge.isActive ? 'url(#arrow-active)' : 'url(#arrow)'}
@@ -284,12 +294,12 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
                 onMouseLeave={() => setHoveredNode(null)}
               >
                 <div className="relative flex items-center justify-center w-8 h-8 group-hover:scale-110 transition-transform">
-                  {isHovered && <div className="absolute inset-0 rounded-full animate-ping opacity-40 bg-white" />}
-                  <div className="w-5 h-5 rounded-full shadow-lg border border-white/10" style={{ backgroundColor: color, boxShadow: `0 0 ${isHovered ? '25px' : '10px'} ${color}` }} />
+                  {isHovered && <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-war-text" />}
+                  <div className="w-5 h-5 rounded-full shadow-lg border border-war-border/10" style={{ backgroundColor: color, boxShadow: `0 0 ${isHovered ? '25px' : '10px'} ${color}` }} />
                 </div>
                 <div className="max-w-[120px] text-center mt-1">
-                  <span className={`text-[10px] font-bold tracking-tight whitespace-normal drop-shadow-md transition-colors ${
-                    isHovered ? 'text-white' : isConnectedToHovered ? 'text-war-text' : 'text-war-muted/80'
+                  <span className={`text-[10px] font-bold tracking-tight whitespace-normal transition-colors ${
+                    isHovered ? 'text-war-text dark:text-white' : isConnectedToHovered ? 'text-war-text' : 'text-war-muted'
                   }`}>
                     {node}
                   </span>
@@ -317,6 +327,55 @@ export default function EntityWeb({ entities, mermaidDiagram }: Props) {
           Total Nodes: {allNodes.length} &bull; Detected Links: {edges.length}
         </p>
       </div>
+
+      {/* Enlarged Mermaid Modal */}
+      <AnimatePresence>
+        {isMermaidEnlarged && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsMermaidEnlarged(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-war-surface border border-war-border rounded-xl p-6 shadow-2xl w-[90vw] h-[90vh] flex flex-col"
+            >
+              <div className="flex justify-between items-center mb-4 border-b border-war-border pb-4">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg font-bold text-war-text">Enlarged Blueprint</h3>
+                  <div className="flex items-center gap-2 bg-war-bg rounded-lg p-1 border border-war-border shadow-sm">
+                    <button onClick={() => setZoomLevel(z => Math.max(0.5, z - 0.25))} className="w-6 h-6 flex items-center justify-center hover:bg-war-surface rounded text-war-muted hover:text-war-text transition-colors">-</button>
+                    <span className="text-xs font-mono font-medium text-war-text min-w-[4ch] text-center">{Math.round(zoomLevel * 100)}%</span>
+                    <button onClick={() => setZoomLevel(z => Math.min(4, z + 0.25))} className="w-6 h-6 flex items-center justify-center hover:bg-war-surface rounded text-war-muted hover:text-war-text transition-colors">+</button>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsMermaidEnlarged(false)}
+                  className="p-1 hover:bg-war-border rounded-md text-war-muted transition-colors w-8 h-8 flex items-center justify-center"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="flex-1 overflow-auto bg-war-surface border border-war-border/30 rounded-lg p-4 cursor-grab active:cursor-grabbing flex items-center justify-center">
+                {svgStr ? (
+                  <div 
+                    dangerouslySetInnerHTML={{ __html: svgStr }} 
+                    className="mermaid-output min-w-max transition-transform duration-200 origin-center"
+                    style={{ transform: `scale(${zoomLevel})` }}
+                  />
+                ) : (
+                  <div className="text-war-muted">Loading...</div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

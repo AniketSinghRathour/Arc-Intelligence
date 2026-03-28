@@ -81,26 +81,17 @@ export default function HomePage() {
     <div className="min-h-screen bg-war-bg font-syne">
       {/* Header */}
       <header className="border-b border-war-border bg-war-surface/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <svg className="w-5 h-5 text-war-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <svg className="w-5 h-5 text-war-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 3v18h18" /><path strokeLinecap="round" strokeLinejoin="round" d="m19 9-5 5-4-4-3 3" /></svg>
             <span className="font-semibold text-sm text-war-text tracking-tight">
-              Arc Intelligence
+              News Arc Analytics
             </span>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-[11px] text-war-muted hidden sm:block font-medium">
               Information Workspace
             </span>
-            <button
-              onClick={() => document.documentElement.classList.toggle('dark')}
-              className="p-1.5 rounded-md hover:bg-war-border transition-colors text-war-muted"
-              title="Toggle Theme"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>
@@ -120,7 +111,7 @@ export default function HomePage() {
             </span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-war-text leading-[1.1] tracking-tight">
-            Story Arc Tracker
+            News Arc Tracker
           </h1>
           <p className="text-sm text-war-muted max-w-2xl mx-auto leading-relaxed">
             Paste any news article URL to extract structured intelligence. 
@@ -164,56 +155,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Supported sites toggle */}
-          <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-            <button
-              onClick={() => setShowSites(!showSites)}
-              className="text-xs font-medium text-war-muted hover:text-war-text transition-colors"
-            >
-              {showSites ? '▾' : '▸'} Supported platforms
-            </button>
-            {EXAMPLE_URLS.map((ex) => (
-              <button
-                key={ex.label}
-                onClick={() => setUrl(ex.url)}
-                className="text-[11px] font-medium text-war-muted border border-war-border px-2.5 py-1 rounded-full hover:border-war-accent hover:text-war-accent transition-all"
-              >
-                {ex.label} ↗
-              </button>
-            ))}
-          </div>
 
-          <AnimatePresence>
-            {showSites && (
-              <motion.div
-                key="sites"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="overflow-hidden"
-              >
-                <div className="bg-war-surface border border-war-border rounded-xl p-4 mt-2">
-                  <p className="text-[11px] font-semibold text-war-muted uppercase tracking-wider mb-3">
-                    Supported Sources
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {SUPPORTED_SITES.map((site) => (
-                      <span
-                        key={site}
-                        className="text-[11px] font-medium bg-war-card border border-war-border rounded-full px-3 py-1 text-war-muted"
-                      >
-                        {site}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-[11px] text-war-muted mt-3">
-                    Note: Sites with Javascript-only rendering or hard paywalls may not extract properly.
-                    Use direct article URLs (e.g., specific news reports).
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </motion.div>
 
         {/* Error */}

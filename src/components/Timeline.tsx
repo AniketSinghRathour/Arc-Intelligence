@@ -9,18 +9,24 @@ interface Props {
 }
 
 const TAG_COLORS: Record<string, { bg: string; text: string; dot: string; glow: string }> = {
-  bullish:       { bg: 'rgba(0,255,136,0.1)',  text: '#00ff88', dot: '#00ff88', glow: 'rgba(0,255,136,0.3)' },
-  bearish:       { bg: 'rgba(255,77,77,0.1)',   text: '#ff4d4d', dot: '#ff4d4d', glow: 'rgba(255,77,77,0.3)' },
-  critical:      { bg: 'rgba(255,77,77,0.1)',   text: '#ff4d4d', dot: '#ff4d4d', glow: 'rgba(255,77,77,0.3)' },
-  controversial: { bg: 'rgba(255,179,71,0.1)',  text: '#ffb347', dot: '#ffb347', glow: 'rgba(255,179,71,0.3)' },
-  neutral:       { bg: 'rgba(107,107,122,0.1)', text: '#6b6b7a', dot: '#6b6b7a', glow: 'rgba(107,107,122,0.3)' },
+  bullish:       { bg: 'rgba(16, 185, 129, 0.1)',   text: '#10b981', dot: '#10b981', glow: 'rgba(16, 185, 129, 0.15)' },
+  bearish:       { bg: 'rgba(244, 63, 94, 0.1)',    text: '#f43f5e', dot: '#f43f5e', glow: 'rgba(244, 63, 94, 0.15)' },
+  critical:      { bg: 'rgba(244, 63, 94, 0.1)',    text: '#f43f5e', dot: '#f43f5e', glow: 'rgba(244, 63, 94, 0.15)' },
+  controversial: { bg: 'rgba(245, 158, 11, 0.1)',   text: '#f59e0b', dot: '#f59e0b', glow: 'rgba(245, 158, 11, 0.15)' },
+  neutral:       { bg: 'rgba(107, 114, 128, 0.1)',  text: '#6b7280', dot: '#6b7280', glow: 'rgba(107, 114, 128, 0.15)' },
 };
 
 export default function Timeline({ events, highlightedIndex }: Props) {
   return (
     <div className="relative pt-4 pb-6 px-2">
       {/* Vertical tracking line */}
-      <div className="absolute left-[23px] top-8 bottom-0 w-[2px] bg-gradient-to-b from-war-border via-war-border/50 to-transparent rounded-full" />
+      <motion.div 
+        initial={{ height: 0 }}
+        animate={{ height: '100%' }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
+        style={{ transformOrigin: 'top' }}
+        className="absolute left-[23px] top-8 w-[2px] bg-gradient-to-b from-war-border via-war-border/50 to-transparent rounded-full z-0" 
+      />
 
       <div className="space-y-8">
         {events.map((event, i) => {
@@ -32,7 +38,7 @@ export default function Timeline({ events, highlightedIndex }: Props) {
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ delay: i * 0.08, type: 'spring', stiffness: 200, damping: 20 }}
               className="flex gap-5 relative group"
             >
               {/* Dot column */}
@@ -55,9 +61,9 @@ export default function Timeline({ events, highlightedIndex }: Props) {
                   <div
                     className="w-3.5 h-3.5 rounded-full transition-all duration-300 relative z-10"
                     style={{
-                      background: isHighlighted ? colors.dot : '#2a2a30',
+                      background: isHighlighted ? colors.dot : 'var(--color-border)',
                       boxShadow: isHighlighted ? `0 0 10px ${colors.dot}` : 'none',
-                      border: isHighlighted ? 'none' : '2px solid #3f3f46'
+                      border: isHighlighted ? 'none' : '2px solid var(--color-muted)'
                     }}
                   />
                 </div>
@@ -66,23 +72,20 @@ export default function Timeline({ events, highlightedIndex }: Props) {
               {/* Content card */}
               <motion.div
                 animate={{
-                  borderColor: isHighlighted ? colors.dot : 'rgba(42, 42, 48, 0.5)',
-                  backgroundColor: isHighlighted ? 'rgba(24, 24, 28, 0.9)' : 'rgba(24, 24, 28, 0.5)',
                   scale: isHighlighted ? 1.02 : 1,
                   y: isHighlighted ? -2 : 0,
-                  boxShadow: isHighlighted ? `0 10px 30px -10px ${colors.glow}` : '0 4px 20px -10px rgba(0,0,0,0.5)',
+                  boxShadow: isHighlighted ? `0 10px 30px -10px ${colors.glow}` : '0 4px 20px -10px rgba(0,0,0,0.05)',
                 }}
                 whileHover={{
                   scale: 1.03,
                   y: -5,
-                  borderColor: colors.dot,
-                  backgroundColor: 'rgba(30, 30, 35, 0.95)',
                   boxShadow: `0 20px 40px -10px ${colors.glow}`,
                 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 className={`flex-1 rounded-2xl border p-5 overflow-hidden relative backdrop-blur-xl transition-colors cursor-pointer group/card ${
-                  isHighlighted ? 'z-20' : 'z-10'
+                  isHighlighted ? 'z-20 border-war-muted bg-war-surface' : 'z-10 border-war-border bg-war-card'
                 }`}
+                style={isHighlighted ? { borderColor: colors.dot } : {}}
               >
                 {/* Subtle background glow when highlighted or hovered */}
                 <div 
